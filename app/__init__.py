@@ -1,9 +1,12 @@
 from flask import Flask
 from typing import Optional
 
-def create_app() -> Flask:
+def create_app(test_config: Optional[dict] = None) -> Flask:
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'your-secret-key'  # Change this in production
+
+    if test_config is not None:
+        app.config.update(test_config)
 
     # Register blueprints
     from app.routes.auth import auth_bp

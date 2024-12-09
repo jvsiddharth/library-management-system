@@ -15,8 +15,10 @@ class Member:
 
     @classmethod
     def from_dict(cls, data: Dict) -> 'Member':
+        if data.get('id') is None:
+            raise ValueError("ID must be provided and cannot be None")
         return cls(
-            id=data.get('id'),
+            id=data['id'],
             name=data['name'],
             email=data['email'],
             password_hash=cls.hash_password(data['password']),

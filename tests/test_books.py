@@ -2,13 +2,24 @@ import pytest
 from app import create_app
 from app.models.book import books
 from app.utils.auth import generate_token
+from app.utils.db import Database
 
-@pytest.fixture
-def client():
-    app = create_app()
-    app.config['TESTING'] = True
+@pytest.fixture(scope='module')
+def test_config():
+    return {
+        'TESTING': True,
+        'DATABASE_URI': 'postgresql://user:password@localhost/test_db'
+    }
+
+@pytest.fixture(scope='module')
+def client(test_config):
+    app = create_app(test_config)
     with app.test_client() as client:
-        yield client
+        with app.app_context():
+            db = Database(dbname='test_db', user='user', password='password')
+            db.connect()
+            yield client
+            db.disconnect()
 
 @pytest.fixture
 def auth_headers():

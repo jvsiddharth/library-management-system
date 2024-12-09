@@ -55,10 +55,21 @@ library_management_system/
    ```bash
    pip install -r requirements.txt
    ```
-5. Run the application:
+5. Ensure the PostgreSQL database is running and accessible. You will need to create the necessary tables as outlined in `db_commands.txt`.
+
+6. Run the application:
    ```bash
    python run.py
    ```
+
+7. You can run tests by executing:
+   ```bash
+   python -m pytest tests/
+   ```
+
+## Database Configuration
+
+The application requires a PostgreSQL-based database. The `db.py` file will need to be edited to configure the database connection. A local or hosted database is necessary for hosting the API. SQL commands for creating tables are included in the `db.py` file.
 
 ## API Documentation
 

@@ -1,21 +1,21 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, Optional
 from datetime import datetime
 
 @dataclass
 class Book:
-    id: int
     title: str
     author: str
     isbn: str
     quantity: int
-    created_at: datetime
-    updated_at: datetime
+    id: Optional[int] = None
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
 
     @classmethod
     def from_dict(cls, data: Dict) -> 'Book':
         return cls(
-            id=data.get('id'),
+            id=data.get('id', 0),
             title=data['title'],
             author=data['author'],
             isbn=data['isbn'],
